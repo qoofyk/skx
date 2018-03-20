@@ -1,0 +1,13 @@
+module load intel/18.0.0
+module load papi/5.6.0
+
+cd build/
+make clean;make
+
+run experiment:
+export OMP_NUM_THREADS=4
+./benchmark-openmp 1024 3 64
+
+1024: matrix size
+3: num of iterations to run dgemm
+64: static schedule for threads, each thread get 64*1024 num of elements to compute

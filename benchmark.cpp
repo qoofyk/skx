@@ -9,14 +9,14 @@
 //#include <acml.h> //assumes AMD platform
 #include <mkl.h>
 
-#define ADDPAPI
-#ifdef ADDPAPI
-// ADD PAPI
-#include <papi.h>
-#define NUM_EVENTS 1
-//long long total_value_CM[1][NUM_EVENTS];
-int EventSet[] = {PAPI_TOT_CYC};
-#endif
+/*#define ADDPAPI*/
+//#ifdef ADDPAPI
+//// ADD PAPI
+//#include <papi.h>
+//#define NUM_EVENTS 1
+////long long total_value_CM[1][NUM_EVENTS];
+//int EventSet[] = {PAPI_TOT_CYC};
+/*#endif*/
 
 /* Your function must have the following signature: */
 
@@ -73,17 +73,17 @@ int main( int argc, char **argv )
             test_sizes[0], loop, threads, thread_block);
     fflush(stdout);
 
-#ifdef ADDPAPI
-    int retval = PAPI_library_init (PAPI_VER_CURRENT);
-    if (retval != PAPI_VER_CURRENT) {
-        printf("PAPI_library_init error!\n");
-        exit(1);
-    }
-    if (PAPI_thread_init((unsigned long (*)(void))(omp_get_thread_num)) != PAPI_OK){
-        printf("PAPI_thread_init error!\n");
-        exit(1);
-    }
-#endif
+/*#ifdef ADDPAPI*/
+    //int retval = PAPI_library_init (PAPI_VER_CURRENT);
+    //if (retval != PAPI_VER_CURRENT) {
+        //printf("PAPI_library_init error!\n");
+        //exit(1);
+    //}
+    //if (PAPI_thread_init((unsigned long (*)(void))(omp_get_thread_num)) != PAPI_OK){
+        //printf("PAPI_thread_init error!\n");
+        //exit(1);
+    //}
+/*#endif*/
 
     /*For each test size*/
     for( int isize = 0; isize < sizeof(test_sizes)/sizeof(test_sizes[0]); isize++ )
