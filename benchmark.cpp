@@ -9,9 +9,7 @@
 //#include <acml.h> //assumes AMD platform
 #include <mkl.h>
 
-/*#define ADDPAPI*/
 #ifdef ADDPAPI
-// ADD PAPI
 #include <papi.h>
 #include "global.h"
 long long global_CM[NUM_EVENTS];

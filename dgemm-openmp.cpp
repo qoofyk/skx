@@ -55,8 +55,10 @@ void square_dgemm( int n, double *A, double *B, double *C)
   #pragma omp parallel default(shared) reduction(+: global_CM)
   {
       num_threads = omp_get_num_threads();
+#ifdef DEBUG
       printf("start computation, num_threads=%i, thread_block=%d\n", num_threads, thread_block);
   /*printf("Hello! Thread rank:%i\n",omp_get_thread_num());*/
+#endif
 
 #ifdef ADDPAPI
         long long value_CM[NUM_EVENTS];
@@ -83,9 +85,11 @@ void square_dgemm( int n, double *A, double *B, double *C)
         retval=PAPI_stop_counters(value_CM, NUM_EVENTS);
         //printf("Total_Cycle:%lld\tclock_rate/core:%e\n", value_CM[0], ((double)value_CM[0])/(threads*seconds));
         //printf("clock_rate/core:%e\n", ((double)value_CM[0])/(threads*seconds));
+#ifdef DEBUG
         for(int m=0; m<NUM_EVENTS; m++){
             printf("T%02d: EVENT[%d]:%lld\n", omp_get_thread_num(), m, value_CM[m]);
         } 
+#endif
         
         for(int m=0; m<NUM_EVENTS; m++)
             global_CM[m] += value_CM[m];
@@ -94,13 +98,15 @@ void square_dgemm( int n, double *A, double *B, double *C)
   }
 
 #ifdef ADDPAPI
+#ifdef DEBUG
     for(int m=0; m<NUM_EVENTS; m++){
       printf("Global_Total_EVENT[%d]:%lld\n", m, global_CM[m]);
       //printf("AVG_Global_Total_EVENT[%d]:%.3f\n", m, ((double)global_CM[m])/num_threads);
     }  
+  printf("Finish computation\n");
+#endif
 #endif
 
-  printf("Finish computation\n");
 
 }
 

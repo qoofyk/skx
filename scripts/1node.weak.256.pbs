@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name="MX.256.skx.weak"
-#SBATCH --output="results/mx.weak.skx.256.%j.out"
-#SBATCH --partition=skx-normal
+#SBATCH --output="results/mx.weak.haswell.256.%j.out"
+#SBATCH --partition=RM
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 # mail alert at start, end and abortion of execution
 #SBATCH --mail-type=ALL
 # send mail to this address
 #SBATCH --mail-user=qoofyk@gmail.com
-#SBATCH -t 4:00:00
+#SBATCH -t 1:00:00
 
 #RM-shared / RM
 ##################parameter setting#################################################
@@ -29,8 +29,8 @@ echo "result will be saved in ${RESULT_DIR}"
 
 
 #dimension
-threads=(1 2 4 8 16 24 32 48)
-lx=(256 360 512 720 1024 1248 1440 1728)
+threads=(1 2 4 8 16 28)
+lx=(256 360 512 720 1024 1344)
 #lx=(4096 5760 8192 11520 16384 19968 23040 27648)
 #ly=24576
 loop=50 #time stop

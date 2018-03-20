@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name="MX.1024.skx.weak"
-#SBATCH --output="results/mx.weak.skx.1024.%j.out"
-#SBATCH --partition=skx-normal
+#SBATCH --job-name="MX.1024.hsw.weak"
+#SBATCH --output="results/mx.weak.haswell.1024.%j.out"
+#SBATCH --partition=RM
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 # mail alert at start, end and abortion of execution
@@ -29,8 +29,8 @@ echo "result will be saved in ${RESULT_DIR}"
 
 
 #dimension
-threads=(1 2 4 8 16 24 32 48)
-lx=(1024 1440 2048 2880 4096 5040 5760 6912)
+threads=(1 2 4 8 16 28)
+lx=(1024 1440 2048 2880 4096 5376)
 #lx=(4096 5760 8192 11520 16384 19968 23040 27648)
 #ly=24576
 loop=10 #time stop

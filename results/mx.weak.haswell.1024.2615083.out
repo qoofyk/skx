@@ -1,0 +1,258 @@
+Architecture:          x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                28
+On-line CPU(s) list:   0-27
+Thread(s) per core:    1
+Core(s) per socket:    14
+Socket(s):             2
+NUMA node(s):          2
+Vendor ID:             GenuineIntel
+CPU family:            6
+Model:                 63
+Model name:            Intel(R) Xeon(R) CPU E5-2695 v3 @ 2.30GHz
+Stepping:              2
+CPU MHz:               1541.000
+BogoMIPS:              4600.73
+Virtualization:        VT-x
+L1d cache:             32K
+L1i cache:             32K
+L2 cache:              256K
+L3 cache:              35840K
+NUMA node0 CPU(s):     0-6,14-20
+NUMA node1 CPU(s):     7-13,21-27
+result will be saved in /home/qoofyk/skx/results/
+
+No.1, lx=1024, threads=1
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=1024, loop=10, threads=1, thread_block=1024
+start calculation
+clock_rate/core:3.194697e+09
+Size: 1024	Whole_Gflop/s: 5.589	n_iterations: 10	threads=1
+Time: 3.842
+Gflops_per_core: 5.589
+Pass verification!
+No.1 exp of case benchmakr-openmp done 
+
+
+No.2, lx=1024, threads=1
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=1024, loop=10, threads=1, thread_block=1024
+start calculation
+clock_rate/core:3.186487e+09
+Size: 1024	Whole_Gflop/s: 5.606	n_iterations: 10	threads=1
+Time: 3.830
+Gflops_per_core: 5.606
+Pass verification!
+No.2 exp of case benchmakr-openmp done 
+
+
+No.3, lx=1024, threads=1
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=1024, loop=10, threads=1, thread_block=1024
+start calculation
+clock_rate/core:3.185852e+09
+Size: 1024	Whole_Gflop/s: 5.603	n_iterations: 10	threads=1
+Time: 3.833
+Gflops_per_core: 5.603
+Pass verification!
+No.3 exp of case benchmakr-openmp done 
+
+
+No.1, lx=1440, threads=2
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=1440, loop=10, threads=2, thread_block=720
+start calculation
+clock_rate/core:3.184039e+09
+Size: 1440	Whole_Gflop/s: 11.172	n_iterations: 10	threads=2
+Time: 5.346
+Gflops_per_core: 5.586
+Pass verification!
+No.1 exp of case benchmakr-openmp done 
+
+
+No.2, lx=1440, threads=2
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=1440, loop=10, threads=2, thread_block=720
+start calculation
+clock_rate/core:3.192425e+09
+Size: 1440	Whole_Gflop/s: 11.096	n_iterations: 10	threads=2
+Time: 5.382
+Gflops_per_core: 5.548
+Pass verification!
+No.2 exp of case benchmakr-openmp done 
+
+
+No.3, lx=1440, threads=2
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=1440, loop=10, threads=2, thread_block=720
+start calculation
+clock_rate/core:3.202273e+09
+Size: 1440	Whole_Gflop/s: 11.271	n_iterations: 10	threads=2
+Time: 5.298
+Gflops_per_core: 5.636
+Pass verification!
+No.3 exp of case benchmakr-openmp done 
+
+
+No.1, lx=2048, threads=4
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=2048, loop=10, threads=4, thread_block=512
+start calculation
+clock_rate/core:3.185283e+09
+Size: 2048	Whole_Gflop/s: 14.663	n_iterations: 10	threads=4
+Time: 11.717
+Gflops_per_core: 3.666
+Pass verification!
+No.1 exp of case benchmakr-openmp done 
+
+
+No.2, lx=2048, threads=4
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=2048, loop=10, threads=4, thread_block=512
+start calculation
+clock_rate/core:3.173180e+09
+Size: 2048	Whole_Gflop/s: 13.953	n_iterations: 10	threads=4
+Time: 12.312
+Gflops_per_core: 3.488
+Pass verification!
+No.2 exp of case benchmakr-openmp done 
+
+
+No.3, lx=2048, threads=4
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=2048, loop=10, threads=4, thread_block=512
+start calculation
+clock_rate/core:3.172768e+09
+Size: 2048	Whole_Gflop/s: 13.989	n_iterations: 10	threads=4
+Time: 12.281
+Gflops_per_core: 3.497
+Pass verification!
+No.3 exp of case benchmakr-openmp done 
+
+
+No.1, lx=2880, threads=8
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=2880, loop=10, threads=8, thread_block=360
+start calculation
+clock_rate/core:2.908410e+09
+Size: 2880	Whole_Gflop/s: 14.060	n_iterations: 10	threads=8
+Time: 33.980
+Gflops_per_core: 1.757
+Pass verification!
+No.1 exp of case benchmakr-openmp done 
+
+
+No.2, lx=2880, threads=8
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=2880, loop=10, threads=8, thread_block=360
+start calculation
+clock_rate/core:2.912241e+09
+Size: 2880	Whole_Gflop/s: 13.992	n_iterations: 10	threads=8
+Time: 34.145
+Gflops_per_core: 1.749
+Pass verification!
+No.2 exp of case benchmakr-openmp done 
+
+
+No.3, lx=2880, threads=8
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=2880, loop=10, threads=8, thread_block=360
+start calculation
+clock_rate/core:2.911837e+09
+Size: 2880	Whole_Gflop/s: 14.032	n_iterations: 10	threads=8
+Time: 34.048
+Gflops_per_core: 1.754
+Pass verification!
+No.3 exp of case benchmakr-openmp done 
+
+
+No.1, lx=4096, threads=16
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=4096, loop=10, threads=16, thread_block=256
+start calculation
+clock_rate/core:2.747660e+09
+Size: 4096	Whole_Gflop/s: 23.138	n_iterations: 10	threads=16
+Time: 59.400
+Gflops_per_core: 1.446
+Pass verification!
+No.1 exp of case benchmakr-openmp done 
+
+
+No.2, lx=4096, threads=16
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=4096, loop=10, threads=16, thread_block=256
+start calculation
+clock_rate/core:2.747867e+09
+Size: 4096	Whole_Gflop/s: 23.182	n_iterations: 10	threads=16
+Time: 59.286
+Gflops_per_core: 1.449
+Pass verification!
+No.2 exp of case benchmakr-openmp done 
+
+
+No.3, lx=4096, threads=16
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=4096, loop=10, threads=16, thread_block=256
+start calculation
+clock_rate/core:2.746536e+09
+Size: 4096	Whole_Gflop/s: 23.093	n_iterations: 10	threads=16
+Time: 59.515
+Gflops_per_core: 1.443
+Pass verification!
+No.3 exp of case benchmakr-openmp done 
+
+
+No.1, lx=5376, threads=28
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=5376, loop=10, threads=28, thread_block=192
+start calculation
+clock_rate/core:2.525446e+09
+Size: 5376	Whole_Gflop/s: 31.130	n_iterations: 10	threads=28
+Time: 99.824
+Gflops_per_core: 1.112
+Pass verification!
+No.1 exp of case benchmakr-openmp done 
+
+
+No.2, lx=5376, threads=28
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=5376, loop=10, threads=28, thread_block=192
+start calculation
+clock_rate/core:2.485377e+09
+Size: 5376	Whole_Gflop/s: 30.845	n_iterations: 10	threads=28
+Time: 100.745
+Gflops_per_core: 1.102
+Pass verification!
+No.2 exp of case benchmakr-openmp done 
+
+
+No.3, lx=5376, threads=28
+Description:	openMP, three-loop dgemm.
+
+test_size[0]=5376, loop=10, threads=28, thread_block=192
+start calculation
+clock_rate/core:2.511475e+09
+Size: 5376	Whole_Gflop/s: 31.026	n_iterations: 10	threads=28
+Time: 100.156
+Gflops_per_core: 1.108
+Pass verification!
+No.3 exp of case benchmakr-openmp done 
+
