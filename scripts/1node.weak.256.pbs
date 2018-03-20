@@ -1,0 +1,58 @@
+#!/bin/bash
+#SBATCH --job-name="MX.256.skx.weak"
+#SBATCH --output="results/mx.weak.skx.256.%j.out"
+#SBATCH --partition=skx-normal
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+# mail alert at start, end and abortion of execution
+#SBATCH --mail-type=ALL
+# send mail to this address
+#SBATCH --mail-user=qoofyk@gmail.com
+#SBATCH -t 4:00:00
+
+#RM-shared / RM
+##################parameter setting#################################################
+PBS_O_HOME=$HOME
+PBS_O_WORKDIR=$(pwd)
+
+WORK_DIR=${PBS_O_WORKDIR}
+RESULT_DIR=${WORK_DIR}/results/
+mkdir -pv ${RESULT_DIR}
+
+BUILD_DIR=${WORK_DIR}/build
+cd ${RESULT_DIR}
+#module list
+lscpu
+#hwloc
+#lstopo
+echo "result will be saved in ${RESULT_DIR}"
+
+
+#dimension
+threads=(1 2 4 8 16 24 32 48)
+lx=(256 360 512 720 1024 1248 1440 1728)
+#lx=(4096 5760 8192 11520 16384 19968 23040 27648)
+#ly=24576
+loop=50 #time stop
+
+#blk_size=64
+#for threads in 1 2 4 8 16 24 32 48
+for ((k=0; k< ${#threads[@]}; k++))
+do
+    for i in `seq 3`
+    do
+
+    export OMP_NUM_THREADS=${threads[k]}
+    thread_block=$(( ${lx[k]} / ${threads[k]} ))
+    export KMP_AFFINITY=granularity=core,scatter
+    for CASE_NAME in openmp
+    do
+        echo
+        echo "No.$i, lx=${lx[k]}, threads=${OMP_NUM_THREADS}"
+        ${BUILD_DIR}/benchmark-${CASE_NAME} ${lx[k]} $loop $thread_block
+        echo "No.$i exp of case benchmakr-${CASE_NAME} done "
+        echo
+    done
+    done
+done
+
