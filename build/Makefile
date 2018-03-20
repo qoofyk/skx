@@ -6,8 +6,8 @@ vpath %.h ../
 MKLPATH=${MKLROOT}
 CC=icc
 MPICC=mpicc
-CFLAGS = -I$(MKLPATH)/include -I${TACC_PAPI_DIR}/include
-LDFLAGS = -mkl -lpthread -lm ${TACC_PAPI_DIR}/lib/libpapi.a
+CFLAGS = -I. -I$(MKLPATH)/include -I${PAPI_DIR}/include -DADDPAPI
+LDFLAGS = -mkl -lpthread -lm ${PAPI_DIR}/lib/libpapi.a
 OMPFLAGS = -qopenmp
 
 all: benchmark-blocked benchmark-blas benchmark-naive benchmark-openmp benchmark-mpi benchmark-pthread

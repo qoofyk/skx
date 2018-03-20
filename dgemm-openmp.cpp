@@ -2,10 +2,10 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-#define ADDPAPI
 #ifdef ADDPAPI
 #include <papi.h>
-#define NUM_EVENTS 1
+#include "global.h"
+int EventSet[]={PAPI_TOT_CYC, PAPI_L1_TCM};
 #endif
 
 const char *dgemm_desc = "openMP, three-loop dgemm.";
@@ -31,29 +31,37 @@ void square_dgemm( int n, double *A, double *B, double *C)
             //C[i+j*n] = cij;
        //}
   /*}*/
-#ifdef ADDPAPI
-    int retval = PAPI_library_init (PAPI_VER_CURRENT);
-    if (retval != PAPI_VER_CURRENT) {
-        printf("PAPI_library_init error!\n");
-        exit(1);
-    }
-    if (PAPI_thread_init((unsigned long (*)(void))(omp_get_thread_num)) != PAPI_OK){
-        printf("PAPI_thread_init error!\n");
-        exit(1);
-    }
-#endif
+    
 
+/*#ifdef ADDPAPI*/
+    //int retval = PAPI_library_init (PAPI_VER_CURRENT);
+    //if (retval != PAPI_VER_CURRENT) {
+        //printf("PAPI_library_init error!\n");
+        //exit(1);
+    //}
+    //if (PAPI_thread_init((unsigned long (*)(void))(omp_get_thread_num)) != PAPI_OK){
+        //printf("PAPI_thread_init error!\n");
+        //exit(1);
+    //}
+//#endif
 
     /*dgemm_jki*/
-  #pragma omp parallel default(shared)
+/*#ifdef ADDPAPI*/
+    //long long global_CM[NUM_EVENTS];
+    //for(int m=0; m < NUM_EVENTS; m++)
+        //global_CM[m] = 0;
+/*#endif*/
+    int num_threads=0;
+  #pragma omp parallel default(shared) reduction(+: global_CM)
   {
-/*  printf("start computation, num_threads=%i\n",omp_get_num_threads());*/
+      num_threads = omp_get_num_threads();
+      printf("start computation, num_threads=%i, thread_block=%d\n", num_threads, thread_block);
   /*printf("Hello! Thread rank:%i\n",omp_get_thread_num());*/
 
 #ifdef ADDPAPI
         long long value_CM[NUM_EVENTS];
-        retval;
-        int EventSet[]={PAPI_TOT_CYC};
+        int retval;
+        //int EventSet[]={PAPI_TOT_CYC, PAPI_L1_TCM};
 /*        for(int m=0; m<NUM_EVENTS; m++)*/
             /*value_CM[m]=0;*/
 
@@ -75,10 +83,22 @@ void square_dgemm( int n, double *A, double *B, double *C)
         retval=PAPI_stop_counters(value_CM, NUM_EVENTS);
         //printf("Total_Cycle:%lld\tclock_rate/core:%e\n", value_CM[0], ((double)value_CM[0])/(threads*seconds));
         //printf("clock_rate/core:%e\n", ((double)value_CM[0])/(threads*seconds));
-        printf("T%02d: Total_Cycle:%lld\n", omp_get_thread_num(), value_CM[0]);
+        for(int m=0; m<NUM_EVENTS; m++){
+            printf("T%02d: EVENT[%d]:%lld\n", omp_get_thread_num(), m, value_CM[m]);
+        } 
+        
+        for(int m=0; m<NUM_EVENTS; m++)
+            global_CM[m] += value_CM[m];
 #endif
 
   }
+
+#ifdef ADDPAPI
+    for(int m=0; m<NUM_EVENTS; m++){
+      printf("Global_Total_EVENT[%d]:%lld\n", m, global_CM[m]);
+      //printf("AVG_Global_Total_EVENT[%d]:%.3f\n", m, ((double)global_CM[m])/num_threads);
+    }  
+#endif
 
   printf("Finish computation\n");
 
