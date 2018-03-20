@@ -137,7 +137,9 @@ int main( int argc, char **argv )
 
 #ifdef ADDPAPI
         //retval=PAPI_stop_counters(value_CM, NUM_EVENTS);
-        ////printf("Total_Cycle:%lld\tclock_rate/core:%e\n", value_CM[0], ((double)value_CM[0])/(threads*seconds));
+        printf("PAPI_TOT_CYC/(core*loops):%e\n", ((double)global_CM[0])/(threads*loop));
+        printf("PAPI_TOT_INS/(core*loops):%e\n", ((double)global_CM[1])/(threads*loop));
+        printf("PAPI_FUL_CCY/(core*loops):%e\n", ((double)global_CM[2])/(threads*loop));
         printf("clock_rate/core:%e\n", ((double)global_CM[0])/(threads*seconds));
         //printf("Total_Cycle:%lld\n", value_CM[0]);
 #endif

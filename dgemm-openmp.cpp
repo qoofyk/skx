@@ -5,7 +5,7 @@
 #ifdef ADDPAPI
 #include <papi.h>
 #include "global.h"
-int EventSet[]={PAPI_TOT_CYC, PAPI_L1_TCM};
+int EventSet[]={PAPI_TOT_CYC, PAPI_TOT_INS, PAPI_FUL_CCY};
 #endif
 
 const char *dgemm_desc = "openMP, three-loop dgemm.";

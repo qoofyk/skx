@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name="MX.SKX"
 #SBATCH --output="results/1node.strong.skx.%j.out"
-#SBATCH --partition=skx-normal
+#SBATCH --partition=RM
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 # mail alert at start, end and abortion of execution
@@ -27,16 +27,16 @@ cd ${RESULT_DIR}
 #dimension
 #threads=(1 2 4 8 16 24 32 48)
 #lx=(1024 1440 2048 2880 4096 5040 5760 6912)
-lx=6912
+lx=1792
 #ly=24576
 loop=10 #time stop
 
 #blk_size=64
-#for threads in 1 2 4 8 16 24 32 48
-for threads in 48 32 24 16 8 4 2 1
+#for threads in 1 2 4 8 16 28
+for threads in 28 16 8 4 2 1
 #for ((k=0; k< ${#threads[@]}; k++))
 do
-    for i in `seq 1`
+    for i in `seq 3`
     do
 
     export OMP_NUM_THREADS=${threads}
