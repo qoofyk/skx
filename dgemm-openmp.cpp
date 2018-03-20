@@ -43,18 +43,22 @@ void square_dgemm( int n, double *A, double *B, double *C)
     }
 #endif
 
-#ifdef ADDPAPI
-        long long value_CM[NUM_EVENTS];
-        retval;
-        int EventSet[]={PAPI_TOT_CYC};
-        retval = PAPI_start_counters(EventSet, NUM_EVENTS);
-#endif
 
     /*dgemm_jki*/
   #pragma omp parallel default(shared)
   {
 /*  printf("start computation, num_threads=%i\n",omp_get_num_threads());*/
   /*printf("Hello! Thread rank:%i\n",omp_get_thread_num());*/
+
+#ifdef ADDPAPI
+        long long value_CM[NUM_EVENTS];
+        retval;
+        int EventSet[]={PAPI_TOT_CYC};
+/*        for(int m=0; m<NUM_EVENTS; m++)*/
+            /*value_CM[m]=0;*/
+
+        retval = PAPI_start_counters(EventSet, NUM_EVENTS);
+#endif
 
   double bkj;
   int i, j, k;
@@ -76,6 +80,7 @@ void square_dgemm( int n, double *A, double *B, double *C)
 
   }
 
+  printf("Finish computation\n");
 
 }
 
