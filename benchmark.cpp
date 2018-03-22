@@ -9,14 +9,11 @@
 //#include <acml.h> //assumes AMD platform
 #include <mkl.h>
 
-/*#define ADDPAPI*/
-//#ifdef ADDPAPI
-//// ADD PAPI
-//#include <papi.h>
-//#define NUM_EVENTS 1
-////long long total_value_CM[1][NUM_EVENTS];
-//int EventSet[] = {PAPI_TOT_CYC};
-/*#endif*/
+#ifdef ADDPAPI
+#include <papi.h>
+#include "global.h"
+long long global_CM[NUM_EVENTS];
+#endif
 
 /* Your function must have the following signature: */
 
@@ -67,23 +64,23 @@ int main( int argc, char **argv )
     test_sizes[0] = atoi(argv[1]);
     int loop = atoi(argv[2]);
     int threads = atoi(getenv("OMP_NUM_THREADS"));
-    int thread_block = atoi(argv[3]);
+    thread_block = atoi(argv[3]);
 
     printf("test_size[0]=%d, loop=%d, threads=%d, thread_block=%d\n", 
             test_sizes[0], loop, threads, thread_block);
     fflush(stdout);
 
-/*#ifdef ADDPAPI*/
-    //int retval = PAPI_library_init (PAPI_VER_CURRENT);
-    //if (retval != PAPI_VER_CURRENT) {
-        //printf("PAPI_library_init error!\n");
-        //exit(1);
-    //}
-    //if (PAPI_thread_init((unsigned long (*)(void))(omp_get_thread_num)) != PAPI_OK){
-        //printf("PAPI_thread_init error!\n");
-        //exit(1);
-    //}
-/*#endif*/
+#ifdef ADDPAPI
+    int retval = PAPI_library_init (PAPI_VER_CURRENT);
+    if (retval != PAPI_VER_CURRENT) {
+        printf("PAPI_library_init error!\n");
+        exit(1);
+    }
+    if (PAPI_thread_init((unsigned long (*)(void))(omp_get_thread_num)) != PAPI_OK){
+        printf("PAPI_thread_init error!\n");
+        exit(1);
+    }
+#endif
 
     /*For each test size*/
     for( int isize = 0; isize < sizeof(test_sizes)/sizeof(test_sizes[0]); isize++ )
@@ -113,6 +110,11 @@ int main( int argc, char **argv )
         //retval = PAPI_start_counters(EventSet, NUM_EVENTS);
 /*#endif*/
 
+#ifdef ADDPAPI
+    for(int m=0; m < NUM_EVENTS; m++)
+        global_CM[m] = 0;
+#endif
+
         seconds = read_timer( );
         //for( int  n_iterations = 1; seconds < 0.1; n_iterations *= 2 ) 
         for( n_iterations = 0; n_iterations < loop; n_iterations++  ) 
@@ -133,12 +135,14 @@ int main( int argc, char **argv )
         }	
         seconds = read_timer( ) - seconds;
 
-/*#ifdef ADDPAPI*/
+#ifdef ADDPAPI
         //retval=PAPI_stop_counters(value_CM, NUM_EVENTS);
-        ////printf("Total_Cycle:%lld\tclock_rate/core:%e\n", value_CM[0], ((double)value_CM[0])/(threads*seconds));
-        //printf("clock_rate/core:%e\n", ((double)value_CM[0])/(threads*seconds));
+        printf("PAPI_TOT_CYC/(core*loops):%e\n", ((double)global_CM[0])/(threads*loop));
+        printf("PAPI_TOT_INS/(core*loops):%e\n", ((double)global_CM[1])/(threads*loop));
+        printf("PAPI_FUL_CCY/(core*loops):%e\n", ((double)global_CM[2])/(threads*loop));
+        printf("clock_rate/core:%e\n", ((double)global_CM[0])/(threads*seconds));
         //printf("Total_Cycle:%lld\n", value_CM[0]);
-/*#endif*/
+#endif
         Mflop_s = 2e-9 * n_iterations * n * n * n / seconds;
         double Gflops_per_core = Mflop_s / threads;
         
