@@ -6,11 +6,11 @@ vpath %.h ../
 MKLPATH=${MKLROOT}
 CC=icc
 MPICC=mpiicc
-CFLAGS = -I. -I$(MKLPATH)/include -I${PAPI_DIR}/include -DADDPAPI
-LDFLAGS = -mkl -lpthread -lm ${PAPI_DIR}/lib/libpapi.a
+CFLAGS = -I. -I$(MKLPATH)/include -I${TACC_PAPI_DIR}/include -DADDPAPI
+LDFLAGS = -mkl -lpthread -lm ${TACC_PAPI_DIR}/lib/libpapi.a
 OMPFLAGS = -qopenmp
 
-all: benchmark-blocked benchmark-blas benchmark-naive benchmark-openmp benchmark-mpi benchmark-pthread
+all: benchmark-blocked benchmark-blas benchmark-naive benchmark-openmp benchmark-mpi benchmark-pthread para-mkl
 
 benchmark-blocked: benchmark.o dgemm-blocked.o
 	$(CC) -o $@ $^ $(LDFLAGS)
@@ -24,6 +24,8 @@ benchmark-openmp: benchmark.o dgemm-openmp.o
 	$(CC) $(OMPFLAGS) -o $@ $^ $(LDFLAGS)
 benchmark-mpi: test.o dgemm-mpi.o
 	$(MPICC) -o $@ $^ $(LDFLAGS)
+para-mkl: parallel_issue.o
+	$(CC) $(OMPFLAGS) -o $@ $^ $(LDFLAGS)
 
 benchmark.o: benchmark.cpp global.h
 	$(CC) $(OMPFLAGS) $(CFLAGS) -c -O3 -Wall $<
@@ -41,6 +43,8 @@ test.o: test.cpp
 	$(MPICC) -c -O3 $<
 dgemm-mpi.o: dgemm-mpi.cpp
 	$(MPICC) -c -O3 $<
+parallel_issue.o: parallel_issue.cpp
+	$(CC) ${TACC_VEC_FLAGS} $(CFLAGS) $(OMPFLAGS) -c -O3 -Wall $<
 
 clean:
 	rm -f benchmark-naive benchmark-blocked benchmark-blas benchmark-mpi benchmark-pthread benchmark-openmp *.o
